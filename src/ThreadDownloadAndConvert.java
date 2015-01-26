@@ -87,28 +87,51 @@ public class ThreadDownloadAndConvert implements Runnable {
         }
 
         System.out.println("Suppression des fichiers ("+threadNumber+")");
+
         destYoutubeDl.delete();
         destFfmpeg.delete();
     }
 
     public void getAudio(String videoURL, String outputPath) throws Exception {
-        String cmd = System.getProperty("java.io.tmpdir")+"youtube-dl("+String.valueOf(threadNumber)+").exe";
+        String cmdYoutubeDl = System.getProperty("java.io.tmpdir")+"youtube-dl("+String.valueOf(threadNumber)+").exe";
+        String cmdFfmpeg = System.getProperty("java.io.tmpdir")+"ffmpeg("+String.valueOf(threadNumber)+").exe";
 
-        Process[] p = new Process[2];
-        //p[0] = new ProcessBuilder(cmd, "--get-filename", videoURL).start();
+        Process[] p = new Process[3];
+
+        p[0] = new ProcessBuilder(cmdYoutubeDl,"--get-filename", videoURL).start();
+
+        BufferedReader in = new BufferedReader( new InputStreamReader(p[0].getInputStream()) );
+
+        String fileName = in.readLine();
+        //p[0] = new ProcessBuilder(cmdYoutubeDl, "--get-filename", videoURL).start();
 
         /*String cmd2 = outputPath;
         cmd2 += "\\";
         cmd2 += "%(title)s.%(ext)s";*/
 
         System.out.println("Debut du téléchargement du Thread n°"+String.valueOf(getThreadNumber()));
-        p[1] = new ProcessBuilder(cmd,
+        p[1] = new ProcessBuilder(cmdYoutubeDl,
                 "-i",
                 videoURL
         ).start();
-
         p[1].waitFor();
         System.out.println("Fin du téléchargement du Thread n°"+String.valueOf(getThreadNumber()));
+
+        System.out.println("Début de la conversion du Thread n°"+String.valueOf(getThreadNumber()));
+        String audioFile = fileName.replaceAll(".mp4","")+".mp3";
+        p[2] = new ProcessBuilder(cmdFfmpeg,"-i",fileName,audioFile).start();
+        p[2].waitFor();
+        System.out.println("fin de la conversion du Thread n°"+String.valueOf(getThreadNumber()));
+
+
+        in.close();
+        File f = new File(fileName);
+        f.delete();
         //youtube-dl.exe https://www.youtube.com/watch?v=2F6d6crjRyU -x --audio-format "mp3" --audio-quality 0 -o C:\Users\Marius\Music\Youtube\%(title)s.%(ext)s
+    }
+
+
+    public void listerRepertoire(){
+
     }
 }
