@@ -10,6 +10,7 @@ import java.util.concurrent.TimeUnit;
 public class MainClass {
 
     private static List<String> links = new ArrayList<>();
+    private static List<String> links2 = new ArrayList<>();
 
     public static void main(String[] args){
         System.out.println("Ajout des liens");
@@ -18,15 +19,15 @@ public class MainClass {
         links.add("https://www.youtube.com/watch?v=JhAlUuRfKJA");
         links.add("https://www.youtube.com/watch?v=0STb5f-QkCU");
         links.add("https://www.youtube.com/watch?v=VZvARSvqjtI");
-        links.add("https://www.youtube.com/watch?v=dNkJHHfgP8I");
+/*        links.add("https://www.youtube.com/watch?v=dNkJHHfgP8I");
         links.add("https://www.youtube.com/watch?v=EaK-F8YHPJk");
         links.add("https://www.youtube.com/watch?v=FVgKy7boViQ");
         links.add("https://www.youtube.com/watch?v=pbYmLk55teE");
-        links.add("https://www.youtube.com/watch?v=WTrNsAsjEmY");
+        links.add("https://www.youtube.com/watch?v=WTrNsAsjEmY");*/
 
 
-        ExecutorService pool = Executors.newFixedThreadPool(10);
-        for (int i = 0; i < links.size(); i++) {
+        ExecutorService pool = Executors.newFixedThreadPool(5);
+        for (int i = 0; i < 5; i++) {
             System.out.println("Ajout du thread " +String.valueOf(i) +" au pool");
             pool.submit(new ThreadDownloadAndConvert(links.get(i),"",i));
         }
@@ -36,9 +37,6 @@ public class MainClass {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-
-
-
 
     }
 }

@@ -2,9 +2,18 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1e7828d5-3ca5-426d-8c35-d9a1fb55d3be" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/TestMultiDownloadAndConvertThread/ThreadDownloadAndConvert.class" afterPath="$PROJECT_DIR$/out/production/TestMultiDownloadAndConvertThread/ThreadDownloadAndConvert.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ThreadDownloadAndConvert.java" afterPath="$PROJECT_DIR$/src/ThreadDownloadAndConvert.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/vcs.xml" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
+      <change type="DELETED" beforePath="C:\Users\Marius\Documents\GitHub\TestMultiDownloadAndConvertThread\Avicii - Hey Brother (TEEMID x Tessa Rose Jackson Cover)-pbYmLk55teE.mp3" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Marius\Documents\GitHub\TestMultiDownloadAndConvertThread\FKJ - Learn To Fly feat. Jordan Rakei-FVgKy7boViQ.mp3" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Marius\Documents\GitHub\TestMultiDownloadAndConvertThread\Henri Pfr &amp; Ofenbach - Don't Worry Be Happy ! (Original Mix)-JhAlUuRfKJA.mp3" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Marius\Documents\GitHub\TestMultiDownloadAndConvertThread\Imagine Dragons – I Bet My Life (Alex Adair Remix)-BJxGx2IIIwU.mp4" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Marius\Documents\GitHub\TestMultiDownloadAndConvertThread\Odjbox - Birmingham-dNkJHHfgP8I.mp3" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Marius\Documents\GitHub\TestMultiDownloadAndConvertThread\Parov Stelar - The Sun (feat. Graham Candy) (Official Video)-WTrNsAsjEmY.mp3" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Marius\Documents\GitHub\TestMultiDownloadAndConvertThread\Poldoore - But I Do-VZvARSvqjtI.mp3" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Marius\Documents\GitHub\TestMultiDownloadAndConvertThread\ProleteR - April Showers-EaK-F8YHPJk.mp3" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Marius\Documents\GitHub\TestMultiDownloadAndConvertThread\The Architect - Les Pensées-0STb5f-QkCU.mp4" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Marius\Documents\GitHub\TestMultiDownloadAndConvertThread\Vaski - Weightless ft. Beak Nasty (Official Music Video)-S2bjqrRbNW4.mp3" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/TestMultiDownloadAndConvertThread/MainClass.class" afterPath="$PROJECT_DIR$/out/production/TestMultiDownloadAndConvertThread/MainClass.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/MainClass.java" afterPath="$PROJECT_DIR$/src/MainClass.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="TestMultiDownloadAndConvertThread.iws" />
@@ -30,11 +39,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="ThreadDownloadAndConvert.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="ThreadDownloadAndConvert.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/ThreadDownloadAndConvert.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="831" max-vertical-offset="2227">
-              <caret line="88" column="74" selection-start-line="88" selection-start-column="74" selection-end-line="88" selection-end-column="74" />
+            <state vertical-scroll-proportion="0.62637365" vertical-offset="1545" max-vertical-offset="2227">
+              <caret line="123" column="80" selection-start-line="123" selection-start-column="79" selection-end-line="123" selection-end-column="80" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -42,11 +51,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="MainClass.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="MainClass.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/MainClass.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.57781756" vertical-offset="204" max-vertical-offset="850">
-              <caret line="31" column="9" selection-start-line="31" selection-start-column="9" selection-end-line="31" selection-end-column="9" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="204" max-vertical-offset="816">
+              <caret line="18" column="47" selection-start-line="18" selection-start-column="47" selection-end-line="18" selection-end-column="47" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -72,8 +81,8 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/MainClass.java" />
         <option value="$PROJECT_DIR$/src/ThreadDownloadAndConvert.java" />
+        <option value="$PROJECT_DIR$/src/MainClass.java" />
       </list>
     </option>
   </component>
@@ -495,20 +504,20 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/ThreadDownloadAndConvert.java">
+    <entry file="file://$PROJECT_DIR$/src/MainClass.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="831" max-vertical-offset="2227">
-          <caret line="88" column="74" selection-start-line="88" selection-start-column="74" selection-end-line="88" selection-end-column="74" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="204" max-vertical-offset="816">
+          <caret line="18" column="47" selection-start-line="18" selection-start-column="47" selection-end-line="18" selection-end-column="47" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/MainClass.java">
+    <entry file="file://$PROJECT_DIR$/src/ThreadDownloadAndConvert.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.57781756" vertical-offset="204" max-vertical-offset="850">
-          <caret line="31" column="9" selection-start-line="31" selection-start-column="9" selection-end-line="31" selection-end-column="9" />
+        <state vertical-scroll-proportion="0.62637365" vertical-offset="1545" max-vertical-offset="2227">
+          <caret line="123" column="80" selection-start-line="123" selection-start-column="79" selection-end-line="123" selection-end-column="80" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
