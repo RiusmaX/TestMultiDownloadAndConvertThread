@@ -99,39 +99,58 @@ public class ThreadDownloadAndConvert implements Runnable {
         Process[] p = new Process[3];
 
         p[0] = new ProcessBuilder(cmdYoutubeDl,"--get-filename", videoURL).start();
-
         BufferedReader in = new BufferedReader( new InputStreamReader(p[0].getInputStream()) );
 
-        String fileName = in.readLine();
-        //p[0] = new ProcessBuilder(cmdYoutubeDl, "--get-filename", videoURL).start();
+        String finalFileDir = outputPath +"\\"+ in.readLine().replace(".mp4",".mp3");
 
-        /*String cmd2 = outputPath;
-        cmd2 += "\\";
-        cmd2 += "%(title)s.%(ext)s";*/
+        String videoFileDirTemp = System.getProperty("java.io.tmpdir")+"video_temp"+String.valueOf(threadNumber)+".mp4";
+        String audioFileDirTemp = System.getProperty("java.io.tmpdir")+"audio_temp"+String.valueOf(threadNumber)+".mp3";
 
         System.out.println("Debut du téléchargement du Thread n°"+String.valueOf(getThreadNumber()));
         p[1] = new ProcessBuilder(cmdYoutubeDl,
                 "-i",
-                videoURL
+                videoURL,
+                "-o",
+                videoFileDirTemp
         ).start();
+        printProcessOutput(p[1]);
         p[1].waitFor();
         System.out.println("Fin du téléchargement du Thread n°"+String.valueOf(getThreadNumber()));
 
         System.out.println("Début de la conversion du Thread n°"+String.valueOf(getThreadNumber()));
-        String audioFile = fileName.replaceAll(".mp4","")+".mp3";
-        p[2] = new ProcessBuilder(cmdFfmpeg,"-i",fileName,audioFile).start();
+        p[2] = new ProcessBuilder(cmdFfmpeg,
+                "-i",
+                videoFileDirTemp,
+                audioFileDirTemp
+        ).start();
+        printProcessOutput(p[2]);
         p[2].waitFor();
         System.out.println("fin de la conversion du Thread n°"+String.valueOf(getThreadNumber()));
 
-
+        System.out.println("Thread n°"+String.valueOf(getThreadNumber())+" Nettoyage...");
+        File fvideo = new File(videoFileDirTemp);
+        File faudioTemp = new File(audioFileDirTemp);
+        if(faudioTemp.exists()){
+            faudioTemp.renameTo(new File(finalFileDir));
+        }
+        if(fvideo.exists()){
+            fvideo.delete();
+        }
         in.close();
-        File f = new File(fileName);
-        f.delete();
+
         //youtube-dl.exe https://www.youtube.com/watch?v=2F6d6crjRyU -x --audio-format "mp3" --audio-quality 0 -o C:\Users\Marius\Music\Youtube\%(title)s.%(ext)s
     }
 
-
-    public void listerRepertoire(){
-
+    private void printProcessOutput(Process p){
+        BufferedReader in = new BufferedReader( new InputStreamReader(p.getInputStream()));
+        String cmdOutput;
+        try {
+            while ( (cmdOutput = in.readLine()) != null ) { System.out.println(cmdOutput); }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
+
+
+
 }
