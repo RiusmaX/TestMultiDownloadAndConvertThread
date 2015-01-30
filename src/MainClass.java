@@ -10,7 +10,6 @@ import java.util.concurrent.TimeUnit;
 public class MainClass {
 
     private static List<String> links = new ArrayList<>();
-    private static List<String> links2 = new ArrayList<>();
 
     public static void main(String[] args){
         System.out.println("Ajout des liens");

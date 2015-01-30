@@ -99,14 +99,13 @@ public class ThreadDownloadAndConvert implements Runnable {
         }else{
             //Cas video
             try {
-                getVideo(getUrl(),getOutputPath());
+                getVideo(getUrl(), getOutputPath());
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
 
         System.out.println("Suppression des fichiers ("+threadNumber+")");
-
         destYoutubeDl.delete();
         destFfmpeg.delete();
     }
@@ -115,7 +114,7 @@ public class ThreadDownloadAndConvert implements Runnable {
      * Récupère l'audio de la vidéo et l'enregistre dans le dossier pasé en paramètre
      * @param videoURL : l'url de la vidéo
      * @param outputPath : dossier de sortie
-     * @throws Exception : Exception levée si erreur dans youtube-dl
+     * @throws Exception : Exception levée si erreur dans youtube-dl.exe ou ffmpeg.exe
      */
     private void getAudio(String videoURL, String outputPath) throws Exception {
         String cmdYoutubeDl = System.getProperty("java.io.tmpdir")+"youtube-dl("+String.valueOf(threadNumber)+").exe";
@@ -130,7 +129,6 @@ public class ThreadDownloadAndConvert implements Runnable {
 
         String videoFileDirTemp = System.getProperty(("java.io.tmpdir")+"video_temp"+String.valueOf(threadNumber));
         String audioFileDirTemp = System.getProperty(("java.io.tmpdir")+"audio_temp"+String.valueOf(threadNumber));
-
 
         System.out.println("Debut du téléchargement de la vidéo du Thread n°"+String.valueOf(getThreadNumber()));
         p[1] = new ProcessBuilder(cmdYoutubeDl,
@@ -163,19 +161,21 @@ public class ThreadDownloadAndConvert implements Runnable {
             fvideo.delete();
         }
         in.close();
-
         //youtube-dl.exe https://www.youtube.com/watch?v=2F6d6crjRyU -x --audio-format "mp3" --audio-quality 0 -o C:\Users\Marius\Music\Youtube\%(title)s.%(ext)s
     }
 
+    /**
+     * Télécharge la vidéo de l'url passée en parametre vers le dossier également passé en parametre
+     * @param videoURL : l'url de la vidéo a télécharger
+     * @param outputPath : le dossier de sortie
+     * @throws Exception : Si erreur dans youtube-dl.exe
+     */
     private void getVideo(String videoURL, String outputPath) throws Exception{
         String cmdYoutubeDl = System.getProperty("java.io.tmpdir")+"youtube-dl("+String.valueOf(threadNumber)+").exe";
 
         Process[] p = new Process[2];
 
-        p[0] = new ProcessBuilder(cmdYoutubeDl,"--get-filename", videoURL).start();
-        BufferedReader in = new BufferedReader( new InputStreamReader(p[0].getInputStream()) );
-
-        String finalFileDir = outputPath +"\\"+ in.readLine();
+        String finalFileDir = outputPath +"\\"+ "%(title)s.%(ext)s";
 
         System.out.println("Debut du téléchargement de la vidéo du Thread n°"+String.valueOf(getThreadNumber()));
         p[1] = new ProcessBuilder(cmdYoutubeDl,
@@ -189,7 +189,6 @@ public class ThreadDownloadAndConvert implements Runnable {
         System.out.println("Fin du téléchargement de la vidéo du Thread n°"+String.valueOf(getThreadNumber()));
     }
 
-
     private void printProcessOutput(Process p){
         BufferedReader in = new BufferedReader( new InputStreamReader(p.getInputStream()));
         String cmdOutput;
@@ -199,7 +198,4 @@ public class ThreadDownloadAndConvert implements Runnable {
             e.printStackTrace();
         }
     }
-
-
-
 }
