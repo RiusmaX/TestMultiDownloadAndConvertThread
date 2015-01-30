@@ -13,51 +13,37 @@ public class ThreadDownloadAndConvert implements Runnable {
 
     private List<String> links = new ArrayList<>();
 
-
     //threadNumber
     private int threadNumber;
-
     public int getThreadNumber() {
         return threadNumber;
     }
-
     public void setThreadNumber(int threadNumber) {
         this.threadNumber = threadNumber;
     }
 
     //url
     private String url;
-
     public String getUrl() {
         return url;
     }
-
     public void setUrl(String url) {
         this.url = url;
     }
 
     //outputPath
     private String outputPath;
-
     public String getOutputPath() {
         return outputPath;
     }
-
     public void setOutputPath(String outputPath) {
         this.outputPath = outputPath;
     }
 
-    public boolean isAudioOnly() {
-        return audioOnly;
-    }
-
-    public void setAudioOnly(boolean audioOnly) {
-        this.audioOnly = audioOnly;
-    }
-
     //audioOnly
     private boolean audioOnly;
-
+    public boolean isAudioOnly() { return audioOnly; }
+    public void setAudioOnly(boolean audioOnly) { this.audioOnly = audioOnly; }
 
 
     /**
@@ -189,6 +175,10 @@ public class ThreadDownloadAndConvert implements Runnable {
         System.out.println("Fin du téléchargement de la vidéo du Thread n°"+String.valueOf(getThreadNumber()));
     }
 
+    /**
+     * Redirige la sortie de console du processus passé en parametre dans la sortie du logiciel
+     * @param p : le processus dont la sortie doit être redirigée
+     */
     private void printProcessOutput(Process p){
         BufferedReader in = new BufferedReader( new InputStreamReader(p.getInputStream()));
         String cmdOutput;
