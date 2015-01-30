@@ -24,8 +24,8 @@ public class MainClass {
         links.add("https://www.youtube.com/watch?v=pbYmLk55teE");
         links.add("https://www.youtube.com/watch?v=WTrNsAsjEmY");
 
-        ExecutorService pool = Executors.newFixedThreadPool(10);
-        for (int i = 0; i < 10; i++) {
+        ExecutorService pool = Executors.newFixedThreadPool(links.size());
+        for (int i = 0; i < links.size(); i++) {
             System.out.println("Ajout du thread " +String.valueOf(i) +" au pool");
             pool.submit(new ThreadDownloadAndConvert(links.get(i),"",i,true));
         }

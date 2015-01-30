@@ -103,8 +103,8 @@ public class ThreadDownloadAndConvert implements Runnable {
      * @throws Exception : Exception levée si erreur dans youtube-dl.exe ou ffmpeg.exe
      */
     private void getAudio(String videoURL, String outputPath) throws Exception {
-        String cmdYoutubeDl = System.getProperty("java.io.tmpdir")+"youtube-dl("+String.valueOf(threadNumber)+").exe";
-        String cmdFfmpeg = System.getProperty("java.io.tmpdir")+"ffmpeg("+String.valueOf(threadNumber)+").exe";
+        String cmdYoutubeDl = System.getProperty("java.io.tmpdir")+"youtube-dl("+String.valueOf(getThreadNumber())+").exe";
+        String cmdFfmpeg = System.getProperty("java.io.tmpdir")+"ffmpeg("+String.valueOf(getThreadNumber())+").exe";
 
         Process[] p = new Process[3];
 
@@ -113,8 +113,8 @@ public class ThreadDownloadAndConvert implements Runnable {
 
         String finalFileDir = outputPath +"\\"+ in.readLine();
 
-        String videoFileDirTemp = System.getProperty(("java.io.tmpdir")+"video_temp"+String.valueOf(threadNumber));
-        String audioFileDirTemp = System.getProperty(("java.io.tmpdir")+"audio_temp"+String.valueOf(threadNumber));
+        String videoFileDirTemp = System.getProperty("java.io.tmpdir")+"video_temp"+String.valueOf(getThreadNumber())+".mp4";
+        String audioFileDirTemp = System.getProperty("java.io.tmpdir")+"audio_temp"+String.valueOf(getThreadNumber())+".mp4";
 
         System.out.println("Debut du téléchargement de la vidéo du Thread n°"+String.valueOf(getThreadNumber()));
         p[1] = new ProcessBuilder(cmdYoutubeDl,
