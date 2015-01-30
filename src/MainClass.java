@@ -28,7 +28,7 @@ public class MainClass {
         ExecutorService pool = Executors.newFixedThreadPool(10);
         for (int i = 0; i < 10; i++) {
             System.out.println("Ajout du thread " +String.valueOf(i) +" au pool");
-            pool.submit(new ThreadDownloadAndConvert(links.get(i),"",i));
+            pool.submit(new ThreadDownloadAndConvert(links.get(i),"",i,true));
         }
         pool.shutdown();
         try {
@@ -36,6 +36,5 @@ public class MainClass {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-
     }
 }

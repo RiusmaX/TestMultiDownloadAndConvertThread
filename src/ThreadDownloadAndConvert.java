@@ -47,7 +47,16 @@ public class ThreadDownloadAndConvert implements Runnable {
         this.outputPath = outputPath;
     }
 
+    public boolean isAudioOnly() {
+        return audioOnly;
+    }
 
+    public void setAudioOnly(boolean audioOnly) {
+        this.audioOnly = audioOnly;
+    }
+
+    //audioOnly
+    private boolean audioOnly;
 
 
 
@@ -56,10 +65,11 @@ public class ThreadDownloadAndConvert implements Runnable {
      * @param url : url de la vidéo
      * @param threadNumber : numéro du thread
      */
-    public ThreadDownloadAndConvert(String url, String outputPath, int threadNumber){
+    public ThreadDownloadAndConvert(String url, String outputPath, int threadNumber, boolean audioOnly){
         setThreadNumber(threadNumber);
         setOutputPath(outputPath);
         setUrl(url);
+        setAudioOnly(audioOnly);
     }
 
 
@@ -77,13 +87,22 @@ public class ThreadDownloadAndConvert implements Runnable {
             Files.copy(ffmpeg.toPath(), destFfmpeg.toPath());
         } catch (IOException e) {
             e.printStackTrace();
-
         }
 
-        try {
-            getAudio(getUrl(),getOutputPath());
-        } catch (Exception e) {
-            e.printStackTrace();
+        if(isAudioOnly()){
+            //Cas audio seul
+            try {
+                getAudio(getUrl(),getOutputPath());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }else{
+            //Cas video
+            try {
+                getVideo(getUrl(),getOutputPath());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
 
         System.out.println("Suppression des fichiers ("+threadNumber+")");
@@ -92,7 +111,13 @@ public class ThreadDownloadAndConvert implements Runnable {
         destFfmpeg.delete();
     }
 
-    public void getAudio(String videoURL, String outputPath) throws Exception {
+    /**
+     * Récupère l'audio de la vidéo et l'enregistre dans le dossier pasé en paramètre
+     * @param videoURL : l'url de la vidéo
+     * @param outputPath : dossier de sortie
+     * @throws Exception : Exception levée si erreur dans youtube-dl
+     */
+    private void getAudio(String videoURL, String outputPath) throws Exception {
         String cmdYoutubeDl = System.getProperty("java.io.tmpdir")+"youtube-dl("+String.valueOf(threadNumber)+").exe";
         String cmdFfmpeg = System.getProperty("java.io.tmpdir")+"ffmpeg("+String.valueOf(threadNumber)+").exe";
 
@@ -101,23 +126,24 @@ public class ThreadDownloadAndConvert implements Runnable {
         p[0] = new ProcessBuilder(cmdYoutubeDl,"--get-filename", videoURL).start();
         BufferedReader in = new BufferedReader( new InputStreamReader(p[0].getInputStream()) );
 
-        String finalFileDir = outputPath +"\\"+ in.readLine().replace(".mp4",".mp3");
+        String finalFileDir = outputPath +"\\"+ in.readLine();
 
-        String videoFileDirTemp = System.getProperty("java.io.tmpdir")+"video_temp"+String.valueOf(threadNumber)+".mp4";
-        String audioFileDirTemp = System.getProperty("java.io.tmpdir")+"audio_temp"+String.valueOf(threadNumber)+".mp3";
+        String videoFileDirTemp = System.getProperty(("java.io.tmpdir")+"video_temp"+String.valueOf(threadNumber));
+        String audioFileDirTemp = System.getProperty(("java.io.tmpdir")+"audio_temp"+String.valueOf(threadNumber));
 
-        System.out.println("Debut du téléchargement du Thread n°"+String.valueOf(getThreadNumber()));
+
+        System.out.println("Debut du téléchargement de la vidéo du Thread n°"+String.valueOf(getThreadNumber()));
         p[1] = new ProcessBuilder(cmdYoutubeDl,
                 "-i",
                 videoURL,
                 "-o",
-                videoFileDirTemp
+                finalFileDir
         ).start();
         printProcessOutput(p[1]);
         p[1].waitFor();
-        System.out.println("Fin du téléchargement du Thread n°"+String.valueOf(getThreadNumber()));
+        System.out.println("Fin du téléchargement de la vidéo du Thread n°"+String.valueOf(getThreadNumber()));
 
-        System.out.println("Début de la conversion du Thread n°"+String.valueOf(getThreadNumber()));
+        System.out.println("Début de la conversion audio du Thread n°"+String.valueOf(getThreadNumber()));
         p[2] = new ProcessBuilder(cmdFfmpeg,
                 "-i",
                 videoFileDirTemp,
@@ -125,13 +151,13 @@ public class ThreadDownloadAndConvert implements Runnable {
         ).start();
         printProcessOutput(p[2]);
         p[2].waitFor();
-        System.out.println("fin de la conversion du Thread n°"+String.valueOf(getThreadNumber()));
+        System.out.println("fin de la conversion audio du Thread n°"+String.valueOf(getThreadNumber()));
 
         System.out.println("Thread n°"+String.valueOf(getThreadNumber())+" Nettoyage...");
         File fvideo = new File(videoFileDirTemp);
         File faudioTemp = new File(audioFileDirTemp);
         if(faudioTemp.exists()){
-            faudioTemp.renameTo(new File(finalFileDir));
+           faudioTemp.renameTo(new File(finalFileDir));
         }
         if(fvideo.exists()){
             fvideo.delete();
@@ -140,6 +166,29 @@ public class ThreadDownloadAndConvert implements Runnable {
 
         //youtube-dl.exe https://www.youtube.com/watch?v=2F6d6crjRyU -x --audio-format "mp3" --audio-quality 0 -o C:\Users\Marius\Music\Youtube\%(title)s.%(ext)s
     }
+
+    private void getVideo(String videoURL, String outputPath) throws Exception{
+        String cmdYoutubeDl = System.getProperty("java.io.tmpdir")+"youtube-dl("+String.valueOf(threadNumber)+").exe";
+
+        Process[] p = new Process[2];
+
+        p[0] = new ProcessBuilder(cmdYoutubeDl,"--get-filename", videoURL).start();
+        BufferedReader in = new BufferedReader( new InputStreamReader(p[0].getInputStream()) );
+
+        String finalFileDir = outputPath +"\\"+ in.readLine();
+
+        System.out.println("Debut du téléchargement de la vidéo du Thread n°"+String.valueOf(getThreadNumber()));
+        p[1] = new ProcessBuilder(cmdYoutubeDl,
+                "-i",
+                videoURL,
+                "-o",
+                finalFileDir
+        ).start();
+        printProcessOutput(p[1]);
+        p[1].waitFor();
+        System.out.println("Fin du téléchargement de la vidéo du Thread n°"+String.valueOf(getThreadNumber()));
+    }
+
 
     private void printProcessOutput(Process p){
         BufferedReader in = new BufferedReader( new InputStreamReader(p.getInputStream()));
