@@ -27,7 +27,7 @@ public class MainClass {
         ExecutorService pool = Executors.newFixedThreadPool(links.size());
         for (int i = 0; i < links.size(); i++) {
             System.out.println("Ajout du thread " +String.valueOf(i) +" au pool");
-            pool.submit(new ThreadDownloadAndConvert(links.get(i),"",i,true));
+            pool.submit(new ThreadDownloadAndConvert(links.get(i),"C:\\Users\\Marius\\Music\\TestMusic",i,true));
         }
         pool.shutdown();
         try {

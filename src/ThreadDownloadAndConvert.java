@@ -11,8 +11,6 @@ import java.util.List;
  */
 public class ThreadDownloadAndConvert implements Runnable {
 
-    private List<String> links = new ArrayList<>();
-
     //threadNumber
     private int threadNumber;
     public int getThreadNumber() {
@@ -64,12 +62,12 @@ public class ThreadDownloadAndConvert implements Runnable {
         File youtubeDl = new File("lib\\youtube-dl.exe");
         File ffmpeg = new File("lib\\ffmpeg.exe");
 
-        File destYoutubeDl = new File(System.getProperty("java.io.tmpdir")+"youtube-dl("+String.valueOf(threadNumber)+").exe");
-        File destFfmpeg = new File(System.getProperty("java.io.tmpdir")+"ffmpeg("+String.valueOf(threadNumber)+").exe");
+        File destYoutubeDl = new File(System.getProperty("java.io.tmpdir")+"youtube-dl("+String.valueOf(getThreadNumber())+").exe");
+        File destFfmpeg = new File(System.getProperty("java.io.tmpdir")+"ffmpeg("+String.valueOf(getThreadNumber())+").exe");
         try {
-            System.out.println("copie de youtubeDl ("+threadNumber+")");
+            System.out.println("copie de youtubeDl ("+getThreadNumber()+")");
             Files.copy(youtubeDl.toPath(), destYoutubeDl.toPath());
-            System.out.println("copie de ffmpeg (" + threadNumber + ")");
+            System.out.println("copie de ffmpeg (" + getThreadNumber() + ")");
             Files.copy(ffmpeg.toPath(), destFfmpeg.toPath());
         } catch (IOException e) {
             e.printStackTrace();
@@ -91,7 +89,7 @@ public class ThreadDownloadAndConvert implements Runnable {
             }
         }
 
-        System.out.println("Suppression des fichiers ("+threadNumber+")");
+        System.out.println("Suppression des fichiers ("+getThreadNumber()+")");
         destYoutubeDl.delete();
         destFfmpeg.delete();
     }
@@ -111,17 +109,17 @@ public class ThreadDownloadAndConvert implements Runnable {
         p[0] = new ProcessBuilder(cmdYoutubeDl,"--get-filename", videoURL).start();
         BufferedReader in = new BufferedReader( new InputStreamReader(p[0].getInputStream()) );
 
-        String finalFileDir = outputPath +"\\"+ in.readLine();
+        String finalFileDir = outputPath +"\\"+ in.readLine().replace(".mp4",".mp3");
 
         String videoFileDirTemp = System.getProperty("java.io.tmpdir")+"video_temp"+String.valueOf(getThreadNumber())+".mp4";
-        String audioFileDirTemp = System.getProperty("java.io.tmpdir")+"audio_temp"+String.valueOf(getThreadNumber())+".mp4";
+        String audioFileDirTemp = System.getProperty("java.io.tmpdir")+"audio_temp"+String.valueOf(getThreadNumber())+".mp3";
 
         System.out.println("Debut du téléchargement de la vidéo du Thread n°"+String.valueOf(getThreadNumber()));
         p[1] = new ProcessBuilder(cmdYoutubeDl,
                 "-i",
                 videoURL,
                 "-o",
-                finalFileDir
+                videoFileDirTemp
         ).start();
         printProcessOutput(p[1]);
         p[1].waitFor();
